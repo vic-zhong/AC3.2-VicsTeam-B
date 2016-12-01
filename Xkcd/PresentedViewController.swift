@@ -82,7 +82,7 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 50
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -94,8 +94,7 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.contentView.backgroundColor = UIColor.white
         
         let number: Int = indexPath.item%4 + 1
-        cell.content.image = ourImage 
-        
+        cell.content.image = ourImage[indexPath.item]
         return cell
     }
     
@@ -182,7 +181,7 @@ public class PresentedCollectionViewCell: UICollectionViewCell {
         let view: UIImageView = UIImageView(frame: frame)
         view.backgroundColor = UIColor.gray
         view.clipsToBounds = true
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleAspectFit
         return view
     }()
 }

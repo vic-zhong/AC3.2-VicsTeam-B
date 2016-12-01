@@ -9,36 +9,39 @@
 import UIKit
 import View2ViewTransition
 
-var ourImage: UIImage?
+var ourImage = [UIImage]()
+var comic = [Comic]()
 
 class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var testLabel: UILabel!
-
+    
     let apiClient = APIManager()
     
-    var comic: Comic?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         somefunc()
+//        loadImage()
         self.view.addSubview(self.collectionView)
     }
-
-    func loadImage(url: URL) {
-        let shareSession = URLSession.shared
-        let downloadTask = shareSession.downloadTask(with: url, completionHandler: { (location: URL?, response: URLResponse?, error: Error?) -> Void in
-            if location != nil {
-                DispatchQueue.main.async {
-                    let data:Data! = try? Data(contentsOf: location!)
-                    let image = UIImage(data: data)
-                    ourImage = image
-                    self.collectionView.reloadData()
+    
+    func loadImage() {
+        for each in comic {
+            let this = URL(string: each.image)!
+            let shareSession = URLSession.shared
+            let downloadTask = shareSession.downloadTask(with: this, completionHandler: { (location: URL?, response: URLResponse?, error: Error?) -> Void in
+                if location != nil {
+                    DispatchQueue.main.async {
+                        let data:Data! = try? Data(contentsOf: this)
+                        let image = UIImage(data: data)
+                        ourImage.append(image!)
+                    }
                 }
-            }
-        })
-        downloadTask.resume()
+            })
+            downloadTask.resume()
+        }
     }
-
+    
     
     let transitionController: TransitionController = TransitionController()
     
@@ -117,7 +120,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 50
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -129,12 +132,12 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell: PresentingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "presenting_cell", for: indexPath) as! PresentingCollectionViewCell
         cell.contentView.backgroundColor = UIColor.lightGray
         let number: Int = indexPath.item%4 + 1
-        cell.content.image = ourImage
+        cell.content.image = ourImage[indexPath.item]
         
         return cell
     }
     
-        // MARK: Actions
+    // MARK: Actions
     
     func onCloseButtonClicked(sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
@@ -144,27 +147,28 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         apiClient.getData(completionHandler: { results in
             DispatchQueue.main.async {
                 if let results = results {
-                    self.comic = results
-                    self.testLabel.text = self.comic?.image
-                    self.loadImage(url: URL(string: (self.comic?.image)!)!)
+                    print(results)
+                    self.loadImage()
+//                    comic = results
+//                    loadImage(url: URL(string: (self.comic?.image)!)!)
                     
                 }
                 
             }
         })
-
+        
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
