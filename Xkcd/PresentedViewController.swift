@@ -82,7 +82,7 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return 10
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -94,7 +94,7 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.contentView.backgroundColor = UIColor.white
         
         let number: Int = indexPath.item%4 + 1
-        cell.content.image = UIImage(named: "image\(number)")
+        cell.content.image = ourImage 
         
         return cell
     }

@@ -9,13 +9,14 @@
 import UIKit
 import View2ViewTransition
 
+var ourImage: UIImage?
+
 class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var testLabel: UILabel!
 
     let apiClient = APIManager()
     
     var comic: Comic?
-    var ourImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 DispatchQueue.main.async {
                     let data:Data! = try? Data(contentsOf: location!)
                     let image = UIImage(data: data)
-                    self.ourImage = image
+                    ourImage = image
                     self.collectionView.reloadData()
                 }
             }
