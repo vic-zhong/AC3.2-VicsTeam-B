@@ -12,8 +12,8 @@ import SwiftyJSON
 
 class APIManager {
     
-    func getData(completionHandler: @escaping (Comic?) -> Void) {
-        Alamofire.request("http://xkcd.com/info.0.json").validate().responseJSON { response in
+    func getData(index: Int, completionHandler: @escaping (Comic?) -> Void) {
+        Alamofire.request("http://xkcd.com/\(String(index))/info.0.json").validate().responseJSON { response in
             
             if let data = response.result.value {
                 let json = JSON(data)

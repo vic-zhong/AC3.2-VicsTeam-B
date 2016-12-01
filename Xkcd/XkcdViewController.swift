@@ -9,14 +9,15 @@
 import UIKit
 import View2ViewTransition
 
-var ourImage: UIImage?
+var ourImage: [UIImage] = []
+var comic: [Comic] = []
 
 class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var testLabel: UILabel!
 
     let apiClient = APIManager()
     
-    var comic: Comic?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +31,12 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if location != nil {
                 DispatchQueue.main.async {
                     let data:Data! = try? Data(contentsOf: location!)
-                    let image = UIImage(data: data)
-                    ourImage = image
-                    self.collectionView.reloadData()
+                    let image = UIImage(data: data)!
+                    ourImage.append(image)
+                    if ourImage.count == 49{
+                        self.collectionView.reloadData()
+                    }
+                    
                 }
             }
         })
@@ -117,7 +121,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return comic.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -128,8 +132,8 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let cell: PresentingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "presenting_cell", for: indexPath) as! PresentingCollectionViewCell
         cell.contentView.backgroundColor = UIColor.lightGray
-        let number: Int = indexPath.item%4 + 1
-        cell.content.image = ourImage
+        //let number: Int = indexPath.item%4 + 1
+        cell.content.image = ourImage[indexPath.row]
         
         return cell
     }
@@ -141,17 +145,17 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func somefunc() {
-        apiClient.getData(completionHandler: { results in
-            DispatchQueue.main.async {
-                if let results = results {
-                    self.comic = results
-                    self.testLabel.text = self.comic?.image
-                    self.loadImage(url: URL(string: (self.comic?.image)!)!)
+        for i in 100..<150{
+            apiClient.getData(index: i, completionHandler: { results in
+                DispatchQueue.main.async {
+                    if let results = results {
+                        comic.append(results)
+                        self.loadImage(url: URL(string: (results.image))!)
+                    }
                     
                 }
-                
-            }
-        })
+            })
+        }
 
     }
 
