@@ -25,22 +25,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(self.collectionView)
     }
     
-    func loadImage() {
-        for each in comic {
-            let this = URL(string: each.image)!
-            let shareSession = URLSession.shared
-            let downloadTask = shareSession.downloadTask(with: this, completionHandler: { (location: URL?, response: URLResponse?, error: Error?) -> Void in
-                if location != nil {
-                    DispatchQueue.main.async {
-                        let data:Data! = try? Data(contentsOf: this)
-                        let image = UIImage(data: data)
-                        ourImage.append(image!)
-                    }
-                }
-            })
-            downloadTask.resume()
-        }
-    }
+    
     
     
     let transitionController: TransitionController = TransitionController()
@@ -146,13 +131,12 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func somefunc() {
         apiClient.getData(completionHandler: { results in
             DispatchQueue.main.async {
-                if let results = results {
+                let resuls = results
                     print(results)
-                    self.loadImage()
 //                    comic = results
 //                    loadImage(url: URL(string: (self.comic?.image)!)!)
                     
-                }
+                
                 
             }
         })
