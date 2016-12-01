@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+class Comic{
+    let image: String
+    
+    init(image: String) {
+        self.image = image
+    }
+}
