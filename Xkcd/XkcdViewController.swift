@@ -10,13 +10,27 @@ import UIKit
 
 class XkcdViewController: UIViewController {
 
+    let apiClient = APIManager()
+    let url = URL(string: "http://xkcd.com/json.html")!
+    var comic: Comic?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        somefunc()
     }
 
+    func somefunc() {
+        apiClient.getData(url: url, completionHandler: { results in
+            DispatchQueue.main.async {
+                if let results = results {
+                    self.comic = results
+                    dump(results)
+                }
+                
+            }
+        })
 
+    }
 
     /*
     // MARK: - Navigation
