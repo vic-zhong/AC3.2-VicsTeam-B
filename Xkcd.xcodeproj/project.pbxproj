@@ -16,6 +16,7 @@
 		47CEA8451DF0B62800800A8E /* XkcdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CEA8441DF0B62800800A8E /* XkcdViewController.swift */; };
 		47CEA8471DF0B8ED00800A8E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CEA8461DF0B8ED00800A8E /* APIManager.swift */; };
 		DE95A5E6FD3797F35B43B1D4 /* Pods_Xkcd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDA1B63163ABBE632839B48 /* Pods_Xkcd.framework */; };
+		EDFD3C151DF0C97400A57915 /* PresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFD3C141DF0C97400A57915 /* PresentedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		7651B492DAE7F43A270200A8 /* Pods-Xkcd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Xkcd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Xkcd/Pods-Xkcd.debug.xcconfig"; sourceTree = "<group>"; };
 		B6155FE49E751E58552A2DA2 /* Pods-Xkcd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Xkcd.release.xcconfig"; path = "Pods/Target Support Files/Pods-Xkcd/Pods-Xkcd.release.xcconfig"; sourceTree = "<group>"; };
 		BFDA1B63163ABBE632839B48 /* Pods_Xkcd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xkcd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDFD3C141DF0C97400A57915 /* PresentedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				47CEA8401DF0B57000800A8E /* DataManager.swift */,
 				47CEA8421DF0B57E00800A8E /* Comic.swift */,
 				47CEA8441DF0B62800800A8E /* XkcdViewController.swift */,
+				EDFD3C141DF0C97400A57915 /* PresentedViewController.swift */,
 				47CEA8321DF0B35C00800A8E /* Main.storyboard */,
 				47CEA8351DF0B35C00800A8E /* Assets.xcassets */,
 				47CEA8371DF0B35C00800A8E /* LaunchScreen.storyboard */,
@@ -127,7 +130,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Eric Chang";
 				TargetAttributes = {
 					47CEA82A1DF0B35C00800A8E = {
@@ -225,6 +228,7 @@
 				47CEA8471DF0B8ED00800A8E /* APIManager.swift in Sources */,
 				47CEA8411DF0B57000800A8E /* DataManager.swift in Sources */,
 				47CEA82F1DF0B35C00800A8E /* AppDelegate.swift in Sources */,
+				EDFD3C151DF0C97400A57915 /* PresentedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +272,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -318,6 +323,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -347,6 +353,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7651B492DAE7F43A270200A8 /* Pods-Xkcd.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Xkcd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -360,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B6155FE49E751E58552A2DA2 /* Pods-Xkcd.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Xkcd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
