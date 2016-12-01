@@ -12,13 +12,16 @@ import SwiftyJSON
 
 class APIManager {
     
-    func getData(url: URL, completionHandler: @escaping (Comic?) -> Void) {
-        Alamofire.request(url).validate().responseJSON { response in
-            let json = JSON(response.result.value)
-            let image = json["img"].string
+    func getData(completionHandler: @escaping (Comic?) -> Void) {
+        Alamofire.request("http://xkcd.com/info.0.json").validate().responseJSON { response in
             
-            let validComic = Comic(image: image!)
-            completionHandler(validComic)
+            if let data = response.result.value {
+                let json = JSON(data)
+                if let image = json["img"].string {
+                    let validComic = Comic(image: image)
+                    completionHandler(validComic)
+                }
+            }
         }
     }
     

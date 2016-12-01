@@ -9,9 +9,10 @@
 import UIKit
 
 class XkcdViewController: UIViewController {
+    @IBOutlet weak var testLabel: UILabel!
 
     let apiClient = APIManager()
-    let url = URL(string: "http://xkcd.com/json.html")!
+    
     var comic: Comic?
     
     override func viewDidLoad() {
@@ -20,11 +21,11 @@ class XkcdViewController: UIViewController {
     }
 
     func somefunc() {
-        apiClient.getData(url: url, completionHandler: { results in
+        apiClient.getData(completionHandler: { results in
             DispatchQueue.main.async {
                 if let results = results {
                     self.comic = results
-                    dump(results)
+                    self.testLabel.text = self.comic?.image
                 }
                 
             }
