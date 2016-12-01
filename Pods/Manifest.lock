@@ -1,0 +1,18 @@
+PODS:
+  - Alamofire (4.2.0)
+  - SwiftyJSON (3.1.3)
+  - View2ViewTransition (1.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - SwiftyJSON
+  - View2ViewTransition
+
+SPEC CHECKSUMS:
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
+  View2ViewTransition: 010ea80e451e42427988102527b0216b8534a741
+
+PODFILE CHECKSUM: d127521a221cf7b66d14e6ee295f96502fd610c6
+
+COCOAPODS: 1.1.1
