@@ -31,9 +31,9 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if location != nil {
                 DispatchQueue.main.async {
                     let data:Data! = try? Data(contentsOf: location!)
-                    let image = UIImage(data: data)!
-                    ourImage.append(image)
-                    if ourImage.count == 49{
+                    let image = UIImage(data: data)
+                    ourImage.append(image!)
+                    if ourImage.count == 50{
                         self.collectionView.reloadData()
                     }
                     
@@ -145,7 +145,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func somefunc() {
-        for i in 100..<150{
+        for i in 1000..<1050{
             apiClient.getData(index: i, completionHandler: { results in
                 DispatchQueue.main.async {
                     if let results = results {
