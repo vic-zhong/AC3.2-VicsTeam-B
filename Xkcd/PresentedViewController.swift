@@ -82,7 +82,7 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return comic.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -93,8 +93,9 @@ class PresentedViewController: UIViewController, UICollectionViewDelegate, UICol
         let cell: PresentedCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "presented_cell", for: indexPath) as! PresentedCollectionViewCell
         cell.contentView.backgroundColor = UIColor.white
         
-        let number: Int = indexPath.item%4 + 1
-        cell.content.image = ourImage[indexPath.item]
+        //let number: Int = indexPath.item%4 + 1
+        cell.content.image = ourImage[indexPath.row]
+        
         return cell
     }
     

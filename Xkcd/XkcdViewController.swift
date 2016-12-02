@@ -9,23 +9,37 @@
 import UIKit
 import View2ViewTransition
 
-var ourImage = [UIImage]()
-var comic = [Comic]()
+var ourImage: [UIImage] = []
+var comic: [Comic] = []
+var currentComic = 1766
 
 class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var testLabel: UILabel!
     
     let apiClient = APIManager()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        somefunc()
-//        loadImage()
+        loadData()
         self.view.addSubview(self.collectionView)
     }
     
-    
+    func loadImage(url: URL) {
+        let shareSession = URLSession.shared
+        let downloadTask = shareSession.downloadTask(with: url, completionHandler: { (location: URL?, response: URLResponse?, error: Error?) -> Void in
+            if location != nil {
+                DispatchQueue.main.async {
+                    let data:Data! = try? Data(contentsOf: location!)
+                    let image = UIImage(data: data)
+                    ourImage.append(image!)
+                    if ourImage.count == comic.count {
+                        self.collectionView.reloadData()
+                    }
+                }
+            }
+        })
+        downloadTask.resume()
+    }
     
     
     let transitionController: TransitionController = TransitionController()
@@ -105,7 +119,7 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return comic.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -116,8 +130,8 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let cell: PresentingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "presenting_cell", for: indexPath) as! PresentingCollectionViewCell
         cell.contentView.backgroundColor = UIColor.lightGray
-        let number: Int = indexPath.item%4 + 1
-        cell.content.image = ourImage[indexPath.item]
+        //let number: Int = indexPath.item%4 + 1
+        cell.content.image = ourImage[indexPath.row]
         
         return cell
     }
@@ -128,33 +142,47 @@ class XkcdViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.dismiss(animated: true, completion: nil)
     }
     
-    func somefunc() {
-        apiClient.getData(completionHandler: { results in
-            DispatchQueue.main.async {
-                let resuls = results
-                    print(results)
-//                    comic = results
-//                    loadImage(url: URL(string: (self.comic?.image)!)!)
-                    
-                
-                
-            }
-        })
+    func loadData() {
+                for i in 0...50 {
+                    self.apiClient.getData(index: String(currentComic - i), completionHandler: { response in
+                        DispatchQueue.main.async {
+                            if let response = response {
+                                comic.append(response)
+                                self.loadImage(url: URL(string: (response.image))!)
+                            }
+                        }
+                    })
+                }
         
+        
+//        if currentComic == 0 {
+//            apiClient.getData(completionHandler: { results in
+//                DispatchQueue.main.async {
+//                    if let results = results {
+//                        comic.append(results)
+//                        currentComic = results.id
+//                        print("\n\n\n\(currentComic)")
+//                        self.loadOtherData()
+//                    }
+//                }
+//            })
+//        }
+//    }
+//    func loadOtherData() {
+//        for i in 0...50 {
+//            self.apiClient.getData(index: String(currentComic - i), completionHandler: { response in
+//                DispatchQueue.main.async {
+//                    if let response = response {
+//                        comic.append(response)
+//                        self.loadImage(url: URL(string: (response.image))!)
+//                    }
+//                }
+//            })
+//        }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
+// MARK: - Funky stuff
 
 extension XkcdViewController: View2ViewTransitionPresenting {
     

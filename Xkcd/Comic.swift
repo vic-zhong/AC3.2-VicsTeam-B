@@ -10,8 +10,10 @@ import Foundation
 
 class Comic{
     let image: String
+    let id: Int
     
-    init(image: String) {
+    init(image: String, id: Int) {
         self.image = image
+        self.id = id
     }
 }

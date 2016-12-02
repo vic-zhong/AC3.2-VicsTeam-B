@@ -12,36 +12,17 @@ import SwiftyJSON
 
 class APIManager {
     
-    func getData(completionHandler: @escaping () -> Void) {
-        for i in 1..<50 {
-            Alamofire.request("http://xkcd.com/\(i)/info.0.json").validate().responseJSON { response in
-                
-                if let data = response.result.value {
-                    let json = JSON(data)
-                    if let image = json["img"].string {
-                        let validComic = Comic(image: image)
-                        comic.append(validComic)
-                        completionHandler(self.loadImage())
-                    }
+    func getData(index: String = "", completionHandler: @escaping (Comic?) -> Void) {
+        Alamofire.request("http://xkcd.com/\(index)/info.0.json").validate().responseJSON { response in
+            
+            if let data = response.result.value {
+                let json = JSON(data)
+                if let image = json["img"].string,
+                    let id = json["num"].int {
+                    let validComic = Comic(image: image, id: id)
+                    completionHandler(validComic)
                 }
             }
-        }
-    }
-    
-    func loadImage() {
-        for each in comic {
-            let this = URL(string: each.image)!
-            let shareSession = URLSession.shared
-            let downloadTask = shareSession.downloadTask(with: this, completionHandler: { (location: URL?, response: URLResponse?, error: Error?) -> Void in
-                if location != nil {
-                    DispatchQueue.main.async {
-                        let data:Data! = try? Data(contentsOf: this)
-                        let image = UIImage(data: data)
-                        ourImage.append(image!)
-                    }
-                }
-            })
-            downloadTask.resume()
         }
     }
 }
